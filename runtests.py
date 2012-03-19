@@ -6,12 +6,13 @@ def main():
     settings.configure(
         INSTALLED_APPS=(
             'scielo_extensions',
+            'django_coverage',
         ),
         DATABASE_ENGINE='sqlite3'
     )
     settings.PAGINATION__ITEMS_PER_PAGE = 5
 
-    call_command('test', 'scielo_extensions')
+    call_command('test_coverage', 'scielo_extensions')
 
 if __name__ == '__main__':
     main()
