@@ -1,0 +1,6 @@
+*.pyc
+*.sqlite
+*.coverage
+_build/
+*.egg
+*.egg-info

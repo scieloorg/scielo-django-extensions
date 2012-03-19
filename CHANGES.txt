@@ -1,0 +1,4 @@
+
+v0.1
+
+    - Initial setup. Migrated some functionalities from scielomanager project.

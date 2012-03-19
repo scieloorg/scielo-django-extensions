@@ -1,0 +1,6 @@
+include README.rst
+include CHANGES.txt
+include LICENSE.txt
+include setup.py
+
+graft scielo_extensions
