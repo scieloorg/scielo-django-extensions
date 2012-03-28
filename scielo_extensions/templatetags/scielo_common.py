@@ -93,7 +93,7 @@ class SimplePagination(template.Node):
             class_li_next = 'disabled' if not object_record.has_next() else ''
 
             html_snippet = u'''
-                <span style=""><b>{0}-{1}</b> {2}<b>{3}</b> </strong></span>
+                <span style=""><b>{0}-{1}</b> {2}<b>{3}</b></span>
                 <span class="pagination"><ul>
                 <li class="prev {4}">
                 <a href="{5}">&larr;</a></li>
