@@ -1,5 +1,6 @@
 # coding: utf-8
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 from django.conf import settings
 from django import template
 
@@ -34,7 +35,40 @@ def full_path(context, **params):
     if len(url_get):
         url_path += "?%s" % "&".join(("%s=%s" % (key, value) for key, value in url_get.items() if value))
 
-    return url_path
+    return url_path.encode('utf8')
+
+
+class NamedPagination(template.Node):
+
+    def __init__(self, letters, selected):
+        self.letters = template.Variable(letters)
+        self.selected = template.Variable(selected)
+
+    def render(self, context):
+        letters = self.letters.resolve(context)
+        selected = self.selected.resolve(context)
+
+        html_snippet = '''<div class="pagination" style="margin:0;padding-top:8px;text-align:center;"><ul>\
+            <li><a href="?" style="line-height: 20px;padding: 0 5px;">''' + str(__('All')) + '''</a></li>'''
+
+        for letter in letters:
+            if letter != selected:
+                html_snippet += '''
+                <li><a href="{0}" style="line-height: 20px;padding: 0 5px;">{1}</a></li>'''\
+                    .format(full_path(context, letter=letter),letter.encode('utf8'))
+            else:
+                html_snippet += '''
+                    <li class="active"><a href="{0}" style="line-height: 20px;padding: 0 5px;">{1}</a></li>'''\
+                    .format(full_path(context, letter=letter),letter.encode('utf8'))
+
+        html_snippet += '''</ul></div>'''
+
+        return html_snippet
+
+@register.tag()
+@easy_tag
+def named_pagination(_tag_name, *params):
+    return NamedPagination(*params)
 
 class Pagination(template.Node):
 
@@ -93,7 +127,7 @@ class SimplePagination(template.Node):
             class_li_next = 'disabled' if not object_record.has_next() else ''
 
             html_snippet = u'''
-                <span style=""><b>{0}-{1}</b> {2}<b>{3}</b></span>
+                <span style=""><b>{0}-{1}</b> {2} <b>{3}</b></span>
                 <span class="pagination"><ul>
                 <li class="prev {4}">
                 <a href="{5}">&larr;</a></li>
