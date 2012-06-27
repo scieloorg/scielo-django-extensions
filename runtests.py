@@ -11,6 +11,7 @@ def main():
         DATABASE_ENGINE='sqlite3'
     )
     settings.PAGINATION__ITEMS_PER_PAGE = 5
+    settings.DOCUMENTATION_BASE_URL = ''
 
     call_command('test_coverage', 'scielo_extensions')
 

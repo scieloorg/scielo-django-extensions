@@ -25,9 +25,11 @@ def easy_tag(func):
 
 def full_path(context, **params):
 
+    url_path = ''
     url_get = context['request'].GET.copy()
 
-    url_path = context['request'].META['PATH_INFO']
+    if 'PATH_INFO' in context['request'].META:   
+        url_path = context['request'].META['PATH_INFO']
 
     for key, value in params.items():
         url_get[key] = value
@@ -48,8 +50,8 @@ class NamedPagination(template.Node):
         letters = self.letters.resolve(context)
         selected = self.selected.resolve(context)
 
-        html_snippet = '''<div class="pagination" style="margin:0;padding-top:8px;text-align:center;"><ul>\
-            <li><a href="?" style="line-height: 20px;padding: 0 5px;">''' + str(__('All')) + '''</a></li>'''
+        html_snippet = '''<div class="pagination" style="margin:0;padding-top:8px;text-align:center;">
+            <ul><li><a href="?" style="line-height: 20px;padding: 0 5px;">''' + str(__('All')) + '''</a></li>'''
 
         for letter in letters:
             if letter != selected:
@@ -58,10 +60,11 @@ class NamedPagination(template.Node):
                     .format(full_path(context, letter=letter),letter.encode('utf8'))
             else:
                 html_snippet += '''
-                    <li class="active"><a href="{0}" style="line-height: 20px;padding: 0 5px;">{1}</a></li>'''\
+                <li class="active"><a href="{0}" style="line-height: 20px;padding: 0 5px;">{1}</a></li>'''\
                     .format(full_path(context, letter=letter),letter.encode('utf8'))
 
-        html_snippet += '''</ul></div>'''
+        html_snippet += '''
+            </ul></div>'''
 
         return html_snippet
 
