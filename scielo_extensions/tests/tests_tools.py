@@ -70,28 +70,3 @@ class ToolsTest(TestCase):
                 <li><a href="?letter=u" style="line-height: 20px;padding: 0 5px;">u</a></li>
                 <li><a href="?letter=z" style="line-height: 20px;padding: 0 5px;">z</a></li>
             </ul></div>''' == result_html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
