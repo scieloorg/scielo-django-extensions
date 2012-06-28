@@ -51,14 +51,14 @@ class ToolsTest(TestCase):
         list_letter = ('f','u','r','p','m','t','a','t','z')
 
         html = '{% load scielo_common %}'
-        html += '{% named_pagination list_letter selected %}' 
+        html += '{% named_pagination list_letter selected %}'
 
         template = Template(html)
         context = Context({'list_letter': sorted(list_letter), 'selected': 'f', 'request': request})
 
         result_html = template.render(context)
 
-        assert '''<div class="pagination" style="margin:0;padding-top:8px;text-align:center;">
+        self.assertEqual('''<div class="pagination" style="margin:0;padding-top:8px;text-align:center;">
             <ul><li><a href="?" style="line-height: 20px;padding: 0 5px;">All</a></li>
                 <li><a href="?letter=a" style="line-height: 20px;padding: 0 5px;">a</a></li>
                 <li class="active"><a href="?letter=f" style="line-height: 20px;padding: 0 5px;">f</a></li>
@@ -69,4 +69,4 @@ class ToolsTest(TestCase):
                 <li><a href="?letter=t" style="line-height: 20px;padding: 0 5px;">t</a></li>
                 <li><a href="?letter=u" style="line-height: 20px;padding: 0 5px;">u</a></li>
                 <li><a href="?letter=z" style="line-height: 20px;padding: 0 5px;">z</a></li>
-            </ul></div>''' == result_html
+            </ul></div>''', result_html)
