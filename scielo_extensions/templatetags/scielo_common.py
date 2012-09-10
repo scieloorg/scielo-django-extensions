@@ -28,7 +28,7 @@ def full_path(context, **params):
     url_path = ''
     url_get = context['request'].GET.copy()
 
-    if 'PATH_INFO' in context['request'].META:   
+    if 'PATH_INFO' in context['request'].META:
         url_path = context['request'].META['PATH_INFO']
 
     for key, value in params.items():
@@ -81,6 +81,10 @@ class Pagination(template.Node):
     def render(self, context):
         object_record = self.object_record.resolve(context)
 
+        if not object_record.paginator:
+            # the paginator is empty
+            return ''
+
         if object_record.paginator.count > settings.PAGINATION__ITEMS_PER_PAGE:
             class_li_previous = 'disabled' if not object_record.has_previous() else ''
             class_li_next = 'disabled' if not object_record.has_next() else ''
@@ -124,6 +128,10 @@ class SimplePagination(template.Node):
     def render(self, context):
 
         object_record = self.object_record.resolve(context)
+
+        if not object_record.paginator:
+            # the paginator is empty
+            return ''
 
         if object_record.paginator.count > settings.PAGINATION__ITEMS_PER_PAGE:
             class_li_previous = 'disabled' if not object_record.has_previous() else ''

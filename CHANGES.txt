@@ -1,3 +1,7 @@
+v0.3
+
+    - Now checking if the paginator is a valid object before using it. This change
+      affects pagination and simplepagination template tags.
 
 v0.1
 
