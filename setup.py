@@ -10,7 +10,7 @@ except IOError:
 
 
 setup(name='scielo-django-extensions',
-      version='0.3.1',
+      version='0.4',
       description='Extensions commonly used in SciELO for bibliographic metadata management.',
       packages=find_packages(),
       include_package_data=True,
